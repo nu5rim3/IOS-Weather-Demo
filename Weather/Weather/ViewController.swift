@@ -20,6 +20,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
 
     var condition : String!
     var temp_c : Int!
+    var temp_f : Int!
     var urlImage : String!
     var city : String!
     
@@ -58,8 +59,10 @@ class ViewController: UIViewController, UISearchBarDelegate {
                     guard let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String: AnyObject] else {return}
                     if let current = json["current"] as? [String: AnyObject]{
                         if let temp = current["temp_c"] as? Int{
-                            print("temp : ",temp)
+                            print("temp_c : ",temp)
                             self.temp_c = temp
+                            self.temp_f = current["temp_f"] as? Int
+                            print("temp_f : ",self.temp_f)
                             }
                         if let condition = current["condition"] as? [String: AnyObject]{
                             self.condition = condition["text"] as! String
@@ -86,7 +89,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
                             self.urlImage_img.isHidden = false
                             self.condition_Lbl.text = self.condition
                             self.cityName_Lbl.text = self.city
-                            self.temp_Lbl.text = "\(self.temp_c.description)°"
+                            self.temp_Lbl.text = "\(self.temp_c.description)°C"
                             self.urlImage_img.downloadimage(from: self.urlImage)
                             
                         }else{
